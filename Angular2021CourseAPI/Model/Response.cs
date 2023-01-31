@@ -57,14 +57,14 @@
         /// <summary>
         /// Gets the data.
         /// </summary>
-        public T Data { get; protected init; }
+        public T? Data { get; protected init; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Response{T}"/> class.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="status">The status.</param>
-        protected Response(T data, IResponseStatus status)
+        public Response(T? data, IResponseStatus status)
         {
             Status = status;
             Data = data;
