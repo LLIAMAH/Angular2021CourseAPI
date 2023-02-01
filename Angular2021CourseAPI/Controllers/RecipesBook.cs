@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Angular2021CourseAPI.Controllers
 {
+    /// <summary>
+    /// The recipes book.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class RecipesBook : ControllerBase
@@ -12,10 +15,24 @@ namespace Angular2021CourseAPI.Controllers
         private static List<Recipe>? _recipeBook = null;
         private readonly ILogger<RecipesBook> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecipesBook"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
         public RecipesBook(ILogger<RecipesBook> logger)
         {
             this._logger = logger;
             _recipeBook = new List<Recipe>();
+        }
+
+        /// <summary>
+        /// Gets the recipe by id.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>A Recipe? .</returns>
+        private static Recipe? GetRecipeById(long id)
+        {
+            return _recipeBook?.FirstOrDefault(o => o.Id == id);
         }
 
         // GET: api/<RecipesBook>
@@ -32,12 +49,12 @@ namespace Angular2021CourseAPI.Controllers
                     new ResponseStatus(EnumResponseStatus.Warning, "Recipe book is empty."));
         }
 
-        private Recipe? GetRecipeById(long id)
-        {
-            return _recipeBook?.FirstOrDefault(o => o.Id == id);
-        }
-
         // GET api/<RecipesBook>/5
+        /// <summary>
+        /// Gets the.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>An IResponse.</returns>
         [HttpGet("{id}")]
         public IResponse<Recipe> Get(int id)
         {
@@ -49,6 +66,11 @@ namespace Angular2021CourseAPI.Controllers
         }
 
         // POST api/<RecipesBook>
+        /// <summary>
+        /// Posts the.
+        /// </summary>
+        /// <param name="recipe">The recipe.</param>
+        /// <returns>An IResponse.</returns>
         [HttpPost]
         public IResponse<bool> Post(Recipe recipe)
         {
@@ -60,11 +82,17 @@ namespace Angular2021CourseAPI.Controllers
                         $"Recipe with same title '{recipe.Name}' - already exists"));
             }
 
-            _recipeBook.Add(recipe);
+            _recipeBook?.Add(recipe);
             return new ResponseBool(true, new ResponseStatus(EnumResponseStatus.OK));
         }
 
         // PUT api/<RecipesBook>/5
+        /// <summary>
+        /// Puts the.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="recipe">The recipe.</param>
+        /// <returns>An IResponse.</returns>
         [HttpPut("{id}")]
         public IResponse<bool> Put(long id, Recipe recipe)
         {
@@ -86,13 +114,18 @@ namespace Angular2021CourseAPI.Controllers
         }
 
         // DELETE api/<RecipesBook>/5
+        /// <summary>
+        /// Deletes the.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>An IResponse.</returns>
         [HttpDelete("{id}")]
         public IResponse<bool> Delete(int id)
         {
             var recipeToDelete = GetRecipeById(id);
             if (recipeToDelete != null)
             {
-                _recipeBook.Remove(recipeToDelete);
+                _recipeBook?.Remove(recipeToDelete);
                 return new ResponseBool(true, new ResponseStatus(EnumResponseStatus.OK));
             }
 

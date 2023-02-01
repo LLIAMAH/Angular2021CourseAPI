@@ -25,7 +25,7 @@
         /// <summary>
         /// Gets the data.
         /// </summary>
-        T Data { get; }
+        T? Data { get; }
     }
 
     /// <summary>
