@@ -101,7 +101,12 @@
     /// <summary>
     /// The response bool.
     /// </summary>
-    public class ResponseBool : Response<bool>
+    public interface IResponseBool: IResponse<bool>{}
+
+    /// <summary>
+    /// The response bool.
+    /// </summary>
+    public class ResponseBool : Response<bool>, IResponseBool
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResponseBool"/> class.
